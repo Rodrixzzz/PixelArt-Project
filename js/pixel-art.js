@@ -30,6 +30,49 @@ colorPersonalizado.addEventListener('change',
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
 
-
   })
 );
+
+//Variables con los elementos Paleta y Grilla-Pixeles.
+var paletaDOM = document.getElementById('paleta');
+var grillaDOM = document.getElementById('grilla-pixeles');
+var cantidadPixeles = 1750;
+//Evento y variables para cambiar el color seleccionado.
+paletaDOM.addEventListener('click',cambiarColorSeleccionado);
+var colorSeleccionadoDOM = document.getElementById('indicador-de-color-mensaje');
+var colorSeleccionadoIconoDOM = document.getElementById('indicador-de-color');
+//Evento  para pintar grilla.
+grillaDOM.addEventListener('click',pintarGrilla);
+
+
+//Función para agregar los colores.
+function crearPaleta() {
+  for (var i = 0; i < nombreColores.length; i++) {
+    var nuevoElmento = document.createElement('div');
+    nuevoElmento.classList.add('color-paleta') ;
+    nuevoElmento.style.backgroundColor = nombreColores[i];
+    paletaDOM.appendChild(nuevoElmento);
+  }
+}
+//Función para crear la grilla.
+function crearGrilla() {
+  for (var i = 0; i < cantidadPixeles ; i++) {
+    var nuevoElmento = document.createElement('div');
+    grillaDOM.appendChild(nuevoElmento,);
+  }
+}
+
+//Función para cambiar el color seleccionado.
+function cambiarColorSeleccionado(e) {
+  if(e.target.classList == 'color-paleta')
+  {
+    colorSeleccionadoDOM.textContent = 'Pincel:' + window.getComputedStyle(e.target,null).getPropertyValue("background-color");
+    colorSeleccionadoIconoDOM.style.backgroundColor = e.target.style.backgroundColor ;
+  }
+}
+
+//Función para pintar grilla.
+function pintarGrilla(e) {
+  console.log(e);
+  e.target.style.backgroundColor = colorSeleccionadoIconoDOM.style.backgroundColor;
+}
