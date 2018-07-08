@@ -25,11 +25,12 @@ var nombreColores = ['White', 'LightYellow',
 var colorPersonalizado = document.getElementById('color-personalizado');
 
 colorPersonalizado.addEventListener('change', 
-  (function() {
+  (function(e) {
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
-
+    console.log(e);
+    cambiarColorSeleccionado(e);
   })
 );
 
@@ -38,11 +39,15 @@ var paletaDOM = document.getElementById('paleta');
 var grillaDOM = document.getElementById('grilla-pixeles');
 var cantidadPixeles = 1750;
 //Evento y variables para cambiar el color seleccionado.
-paletaDOM.addEventListener('click',cambiarColorSeleccionado);
 var colorSeleccionadoDOM = document.getElementById('indicador-de-color-mensaje');
 var colorSeleccionadoIconoDOM = document.getElementById('indicador-de-color');
-//Evento  para pintar grilla.
-grillaDOM.addEventListener('click',pintarGrilla);
+paletaDOM.addEventListener('click',cambiarColorSeleccionado);
+//Evento y variables para pintar grilla.
+var estaApretado = false;
+grillaDOM.addEventListener('mousedown',manternerApretado);
+grillaDOM.addEventListener('mouseup', soltarApretado);
+grillaDOM.addEventListener('click', pintarGrilla);
+
 
 
 //Función para agregar los colores.
@@ -64,15 +69,36 @@ function crearGrilla() {
 
 //Función para cambiar el color seleccionado.
 function cambiarColorSeleccionado(e) {
+  //Si el color es seleccionado de la paleta.
   if(e.target.classList == 'color-paleta')
   {
     colorSeleccionadoDOM.textContent = 'Pincel:' + window.getComputedStyle(e.target,null).getPropertyValue("background-color");
     colorSeleccionadoIconoDOM.style.backgroundColor = e.target.style.backgroundColor ;
+  }
+  else
+  {
+    //Si el color es personalizado(fue seleccionado de la rueda de colores).
+    if(e.target.classList == 'input-color')
+    {
+      colorSeleccionadoIconoDOM.style.backgroundColor = e.target.value;
+      colorSeleccionadoDOM.textContent = 'Pincel:' + window.getComputedStyle(colorSeleccionadoIconoDOM,null).getPropertyValue('background-color');
+    }
   }
 }
 
 //Función para pintar grilla.
 function pintarGrilla(e) {
   console.log(e);
-  e.target.style.backgroundColor = colorSeleccionadoIconoDOM.style.backgroundColor;
+  if (estaApretado || e.type == 'click')
+  {
+    e.target.style.backgroundColor = colorSeleccionadoIconoDOM.style.backgroundColor;
+  }
+}
+function manternerApretado(e){
+  estaApretado = true;
+  grillaDOM.addEventListener('mousemove',pintarGrilla);
+}
+function soltarApretado() {
+  estaApretado = false;
+  grillaDOM.removeEventListener('mousemove',pintarGrilla);
 }
