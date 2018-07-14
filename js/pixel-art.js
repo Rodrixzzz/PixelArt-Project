@@ -29,7 +29,6 @@ colorPersonalizado.addEventListener('change',
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
-    console.log(e);
     cambiarColorSeleccionado(e);
   })
 );
@@ -47,7 +46,15 @@ var estaApretado = false;
 grillaDOM.addEventListener('mousedown',manternerApretado);
 grillaDOM.addEventListener('mouseup', soltarApretado);
 grillaDOM.addEventListener('click', pintarGrilla);
-
+//Evento para borra todo.
+document.getElementById('borrar').addEventListener('click',borrarGrillaEntera);
+//Eventos para cargar los heroes.
+document.getElementById('batman').addEventListener('click',function () {cargarSuperheroe(batman);});
+document.getElementById('wonder').addEventListener('click',function () {cargarSuperheroe(wonder);});
+document.getElementById('flash').addEventListener('click',function () {cargarSuperheroe(flash);});
+document.getElementById('invisible').addEventListener('click',function () {cargarSuperheroe(invisible);});
+//Eventos para guardar la imagen.
+document.getElementById('guardar').addEventListener('click',guardarPixelArt);
 
 
 //Función para agregar los colores.
@@ -88,7 +95,6 @@ function cambiarColorSeleccionado(e) {
 
 //Función para pintar grilla.
 function pintarGrilla(e) {
-  console.log(e);
   if (estaApretado || e.type == 'click')
   {
     e.target.style.backgroundColor = colorSeleccionadoIconoDOM.style.backgroundColor;
@@ -102,3 +108,15 @@ function soltarApretado() {
   estaApretado = false;
   grillaDOM.removeEventListener('mousemove',pintarGrilla);
 }
+
+//Borrar Grilla.
+function borrarGrillaEntera() {
+  var $grilla = $('#grilla-pixeles').find('div');
+  $grilla.each(function () {
+    $(this).animate({'backgroundColor' : 'white'},1000);
+  });
+}
+
+//Ejecución de las Primeras funciones para dibujar grilla y paleta.
+crearGrilla();
+crearPaleta();
