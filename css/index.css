@@ -112,6 +112,7 @@ main {
   width: 795px;
   height: 495px;
   overflow: hidden;
+  user-select: none;
 }
 
 #container {

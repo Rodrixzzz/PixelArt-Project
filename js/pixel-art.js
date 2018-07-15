@@ -44,7 +44,7 @@ paletaDOM.addEventListener('click',cambiarColorSeleccionado);
 //Evento y variables para pintar grilla.
 var estaApretado = false;
 grillaDOM.addEventListener('mousedown',manternerApretado);
-grillaDOM.addEventListener('mouseup', soltarApretado);
+document.addEventListener('mouseup', soltarApretado);
 grillaDOM.addEventListener('click', pintarGrilla);
 //Evento para borra todo.
 document.getElementById('borrar').addEventListener('click',borrarGrillaEntera);
